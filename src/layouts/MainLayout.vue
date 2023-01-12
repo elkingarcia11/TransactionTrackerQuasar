@@ -2,15 +2,18 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated class="bg-secondary">
       <q-toolbar>
-        <q-toolbar-title
-          ><q-btn
+        <q-toolbar-title>
+          <q-btn
             flat
             icon="receipt_long"
             size="lg"
             label="Transactions Tracker"
-        /></q-toolbar-title>
+          />
+        </q-toolbar-title>
         <q-space />
         <q-btn
+          v-if="isNotLogin()"
+          @click="printRouteName()"
           size="md"
           flat
           icon-right="logout"
@@ -43,7 +46,15 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'MainLayout',
-
+  methods: {
+    isNotLogin() {
+      if (this.$route.path != '/') {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   setup() {
     const leftDrawerOpen = ref(false);
 
