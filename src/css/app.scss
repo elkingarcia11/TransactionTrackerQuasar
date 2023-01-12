@@ -1,1 +1,44 @@
 // app global css in SCSS form
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: scroll;
+  background-color: #eceff8;
+  padding: 5vh;
+}
+
+.fab-class {
+  background-color: #4e6abe;
+  color: white;
+}
+
+.footer {
+  background-color: #eceff8;
+  border-top-style: solid;
+  border-width: 0.5px;
+  border-color: lightgray;
+}
+
+.toolbar-title {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.login-input {
+  width: 300px;
+}
+
+@media only screen and (max-device-width: 480px) and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .table-container {
+    padding: 2vh;
+  }
+  .footer-title {
+    font-size: small;
+  }
+}
