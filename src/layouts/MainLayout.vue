@@ -2,9 +2,14 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated class="bg-secondary">
       <q-toolbar>
-        <q-toolbar-title class="row justify-center toolbar-title">
-          Transactions Tracker
-        </q-toolbar-title>
+        <q-toolbar-title
+          ><q-btn
+            flat
+            icon="receipt_long"
+            size="lg"
+            label="Transactions Tracker"
+        /></q-toolbar-title>
+        <q-space />
         <q-btn
           size="md"
           flat
