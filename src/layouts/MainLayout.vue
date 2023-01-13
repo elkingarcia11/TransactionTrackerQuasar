@@ -13,7 +13,6 @@
         <q-space />
         <q-btn
           v-if="isNotLogin()"
-          @click="printRouteName()"
           size="md"
           flat
           icon-right="logout"

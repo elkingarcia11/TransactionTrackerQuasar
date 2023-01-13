@@ -1,12 +1,16 @@
 <template>
   <div class="table-container">
     <q-table
+      v-touch-hold.mouse="handleHold"
       title="Transactions"
       title-class="titleClass"
       :rows="rows"
       :columns="columns"
-      row-key="name"
+      :selection="selection"
       :filter="filter"
+      v-model:selected="selected"
+      @row-click="selectRow"
+      row-key="name"
       separator="cell"
     >
       <template v-slot:top-right>
@@ -106,8 +110,10 @@ export default {
   setup() {
     return {
       filter: ref(''),
+      selected: ref([]),
       columns,
       rows,
+      selection: ref('none'),
     };
   },
   methods: {
@@ -120,6 +126,24 @@ export default {
         .catch(() => {
           console.log('Failed to fetch transactions');
         });
+    },
+    handleHold() {
+      if (this.selection == 'none') {
+        this.selection = 'multiple';
+      } else {
+        this.selection = 'none';
+      }
+    },
+    selectRow(evt, row, index) {
+      console.log(this.selected);
+      if (this.selection == 'multiple') {
+        const i = this.selected.indexOf(row);
+        if (i == -1) {
+          this.selected.push(row);
+        } else {
+          this.selected.splice(i, 1);
+        }
+      }
     },
   },
 };
