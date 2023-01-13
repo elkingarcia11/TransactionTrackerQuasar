@@ -28,9 +28,16 @@
       </template>
     </q-table>
   </div>
+
+  <FabAddComponent v-if="selection == 'none'" />
+  <FabBar v-else-if="selected.length < 2" />
+  <FabDeleteComponent v-else />
 </template>
 
 <script>
+import FabAddComponent from 'src/components/FabAddComponent.vue';
+import FabDeleteComponent from 'src/components/FabDeleteComponent.vue';
+import FabBar from 'components/FabBar.vue';
 import { ref } from 'vue';
 import { api } from 'boot/axios';
 
@@ -135,7 +142,7 @@ export default {
       }
     },
     selectRow(evt, row, index) {
-      console.log(this.selected);
+      console.log(evt, index);
       if (this.selection == 'multiple') {
         const i = this.selected.indexOf(row);
         if (i == -1) {
@@ -146,5 +153,6 @@ export default {
       }
     },
   },
+  components: { FabAddComponent, FabBar, FabDeleteComponent },
 };
 </script>
