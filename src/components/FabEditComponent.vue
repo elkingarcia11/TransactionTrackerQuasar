@@ -1,14 +1,14 @@
 <template>
   <q-dialog v-model="prompt">
     <q-card class="q-pa-lg" style="min-width: 350px">
-      <div class="text-h5 text-center">Add transaction</div>
+      <div class="text-h5 text-center">Edit transaction</div>
       <q-input
         autofocus
         ref="nameInput"
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="nameVal"
+        v-model="name"
         label="Full Name"
         @keyup.enter="nextInput(1)"
       />
@@ -17,7 +17,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="invoiceVal"
+        v-model="invoice"
         label="Invoice No."
         @keyup.enter="nextInput(2)"
       />
@@ -26,7 +26,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="amountVal"
+        v-model="paid"
         label="Amount Paid"
         @keyup.enter="nextInput(3)"
       />
@@ -35,7 +35,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="receiptVal"
+        v-model="receipt"
         label="Receipt No."
         @keyup.enter="nextInput(4)"
       />
@@ -83,18 +83,7 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-  <q-page-sticky position="bottom-right" :offset="[18, 18]">
-    <q-btn round color="green" icon="edit" size="lg" @click="triggerDialogue" />
-    <q-btn
-      round
-      class="q-ml-lg"
-      color="red"
-      icon="delete"
-      size="lg"
-      @click="triggerDialogue"
-    />
-  </q-page-sticky>
+  <q-btn round color="green" icon="edit" size="lg" @click="triggerDialogue" />
 </template>
 
 <script>
@@ -105,18 +94,24 @@ const dateString = d.toISOString();
 const dateStringSub = dateString.substring(0, 10);
 
 export default {
+  props: ['item'],
   setup() {
     return {
-      nameVal: ref(''),
-      invoiceVal: ref(''),
-      amountVal: ref(''),
-      receiptVal: ref(''),
+      name: ref(''),
+      invoice: ref(''),
+      paid: ref(''),
+      receipt: ref(''),
       date: ref(dateStringSub),
       prompt: ref(false),
     };
   },
   methods: {
     triggerDialogue() {
+      this.name = this.item[0].name;
+      this.invoice = this.item[0].invoice;
+      this.paid = this.item[0].paid;
+      this.receipt = this.item[0].receipt;
+      this.date = this.item[0].date;
       this.prompt = true;
     },
     nextInput(i) {
@@ -136,23 +131,18 @@ export default {
       }
     },
     submitTransaction() {
+      const updatedTransaction = {
+        name: this.name,
+        invoice: this.invoice,
+        paid: this.paid,
+        receipt: this.receipt,
+        date: this.date,
+      };
+      console.log('Submitting: ', JSON.stringify(updatedTransaction));
       // send request to server with fields
-
-      // clear all fields
-      this.prompt = false;
-      this.nameVal = '';
-      this.invoiceVal = '';
-      this.amountVal = '';
-      this.receiptVal = '';
-      this.date = ref(new Date().toISOString().substring(0, 10));
     },
     cancelTransaction() {
       this.prompt = false;
-      this.nameVal = '';
-      this.invoiceVal = '';
-      this.amountVal = '';
-      this.receiptVal = '';
-      this.date = ref(new Date().toISOString().substring(0, 10));
     },
   },
 };

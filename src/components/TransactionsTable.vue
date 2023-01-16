@@ -30,14 +30,36 @@
   </div>
 
   <FabAddComponent v-if="selection == 'none'" />
-  <FabBar v-else-if="selected.length < 2" />
-  <FabDeleteComponent v-else />
+  <q-page-sticky
+    position="bottom-right"
+    :offset="[18, 18]"
+    v-else-if="selected.length < 2"
+  >
+    <FabEditComponent :item="selected" />
+    <q-btn
+      round
+      class="q-ml-lg"
+      color="red"
+      icon="delete"
+      size="lg"
+      @click="deleteRows"
+    />
+  </q-page-sticky>
+  <q-page-sticky position="bottom-right" :offset="[18, 18]" v-else>
+    <q-btn
+      round
+      class="q-ml-lg"
+      color="red"
+      icon="delete"
+      size="lg"
+      @click="deleteRows"
+    />
+  </q-page-sticky>
 </template>
 
 <script>
 import FabAddComponent from 'src/components/FabAddComponent.vue';
-import FabDeleteComponent from 'src/components/FabDeleteComponent.vue';
-import FabBar from 'components/FabBar.vue';
+import FabEditComponent from 'src/components/FabEditComponent.vue';
 import { ref } from 'vue';
 import { api } from 'boot/axios';
 
@@ -152,7 +174,10 @@ export default {
         }
       }
     },
+    deleteRows() {
+      console.log('Deleting: ', JSON.stringify(this.selected));
+    },
   },
-  components: { FabAddComponent, FabBar, FabDeleteComponent },
+  components: { FabAddComponent, FabEditComponent },
 };
 </script>

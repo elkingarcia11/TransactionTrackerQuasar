@@ -8,7 +8,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="nameVal"
+        v-model="name"
         label="Full Name"
         @keyup.enter="nextInput(1)"
       />
@@ -17,7 +17,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="invoiceVal"
+        v-model="invoice"
         label="Invoice No."
         @keyup.enter="nextInput(2)"
       />
@@ -26,7 +26,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="amountVal"
+        v-model="paid"
         label="Amount Paid"
         @keyup.enter="nextInput(3)"
       />
@@ -35,7 +35,7 @@
         class="q-pt-md"
         outlined
         color="secondary"
-        v-model="receiptVal"
+        v-model="receipt"
         label="Receipt No."
         @keyup.enter="nextInput(4)"
       />
@@ -54,8 +54,15 @@
               cover
               transition-show="scale"
               transition-hide="scale"
+              @keyup.enter="nextInput(5)"
             >
-              <q-date v-model="date" color="secondary" mask="YYYY-MM-DD">
+              <q-date
+                ref="dateInput"
+                v-model="date"
+                color="secondary"
+                mask="YYYY-MM-DD"
+                @keyup.enter="submitTransaction"
+              >
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Done" color="secondary" flat />
                 </div>
@@ -131,6 +138,11 @@ export default {
         case 4:
           this.$refs.dateProxy.show();
           break;
+        case 5:
+          this.$refs.dateProxy.hide();
+          this.$refs.dateInput.focus();
+          break;
+        case 6:
       }
     },
     submitTransaction() {
@@ -138,18 +150,18 @@ export default {
 
       // clear all fields
       this.prompt = false;
-      this.nameVal = '';
-      this.invoiceVal = '';
-      this.amountVal = '';
-      this.receiptVal = '';
+      this.name = '';
+      this.invoice = '';
+      this.paid = '';
+      this.receipt = '';
       this.date = ref(new Date().toISOString().substring(0, 10));
     },
     cancelTransaction() {
       this.prompt = false;
-      this.nameVal = '';
-      this.invoiceVal = '';
-      this.amountVal = '';
-      this.receiptVal = '';
+      this.name = '';
+      this.invoice = '';
+      this.paid = '';
+      this.receipt = '';
       this.date = ref(new Date().toISOString().substring(0, 10));
     },
   },
