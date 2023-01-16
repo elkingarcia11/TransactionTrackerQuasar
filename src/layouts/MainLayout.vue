@@ -10,15 +10,25 @@
             label="Transactions Tracker"
           />
         </q-toolbar-title>
-        <q-btn
-          v-if="isNotLogin()"
-          size="md"
-          flat
-          icon-right="logout"
-          color="white"
-          label="Logout"
-          id="logoutButton"
-        />
+        <template v-if="isNotLogin()">
+          <q-btn
+            v-if="$q.platform.is.mobile"
+            size="md"
+            flat
+            icon="logout"
+            color="white"
+            id="logoutButton"
+          />
+          <q-btn
+            v-else
+            size="md"
+            flat
+            icon-right="logout"
+            color="white"
+            label="Logout"
+            id="logoutButton"
+          />
+        </template>
       </q-toolbar>
     </q-header>
 
@@ -41,7 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-
+import { useQuasar } from 'quasar';
 export default defineComponent({
   name: 'MainLayout',
   methods: {
@@ -56,6 +66,8 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
+    const $q = useQuasar();
+    $q.platform.is.mobile;
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {

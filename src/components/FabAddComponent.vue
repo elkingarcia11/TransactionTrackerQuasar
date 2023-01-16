@@ -56,13 +56,7 @@
               transition-hide="scale"
               @keyup.enter="nextInput(5)"
             >
-              <q-date
-                ref="dateInput"
-                v-model="date"
-                color="secondary"
-                mask="YYYY-MM-DD"
-                @keyup.enter="submitTransaction"
-              >
+              <q-date v-model="date" color="secondary" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Done" color="secondary" flat />
                 </div>
@@ -112,10 +106,10 @@ const dateStringSub = dateString.substring(0, 10);
 export default {
   setup() {
     return {
-      nameVal: ref(''),
-      invoiceVal: ref(''),
-      amountVal: ref(''),
-      receiptVal: ref(''),
+      name: ref(''),
+      invoice: ref(''),
+      paid: ref(''),
+      receipt: ref(''),
       date: ref(dateStringSub),
       prompt: ref(false),
     };
@@ -140,9 +134,10 @@ export default {
           break;
         case 5:
           this.$refs.dateProxy.hide();
-          this.$refs.dateInput.focus();
           break;
         case 6:
+          this.submitTransaction();
+          break;
       }
     },
     submitTransaction() {
