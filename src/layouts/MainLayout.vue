@@ -10,7 +10,6 @@
             label="Transactions Tracker"
           />
         </q-toolbar-title>
-        <q-space />
         <q-btn
           v-if="isNotLogin()"
           size="md"

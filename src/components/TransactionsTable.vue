@@ -44,15 +44,24 @@
       size="lg"
       @click="deleteRows"
     />
-  </q-page-sticky>
-  <q-page-sticky position="bottom-right" :offset="[18, 18]" v-else>
     <q-btn
       round
       class="q-ml-lg"
-      color="red"
-      icon="delete"
+      color="grey"
+      icon="close"
       size="lg"
-      @click="deleteRows"
+      @click="resetSelection"
+    />
+  </q-page-sticky>
+  <q-page-sticky position="bottom-right" :offset="[18, 18]" v-else>
+    <q-btn round color="red" icon="delete" size="lg" @click="deleteRows" />
+    <q-btn
+      round
+      class="q-ml-lg"
+      color="grey"
+      icon="close"
+      size="lg"
+      @click="resetSelection"
     />
   </q-page-sticky>
 </template>
@@ -176,6 +185,12 @@ export default {
     },
     deleteRows() {
       console.log('Deleting: ', JSON.stringify(this.selected));
+      this.selected = [];
+      this.selection = 'none';
+    },
+    resetSelection() {
+      this.selected = [];
+      this.selection = 'none';
     },
   },
   components: { FabAddComponent, FabEditComponent },
